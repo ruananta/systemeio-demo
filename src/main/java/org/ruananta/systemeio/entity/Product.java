@@ -3,6 +3,8 @@ package org.ruananta.systemeio.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -13,8 +15,17 @@ public class Product {
     private String name;
     @NotNull
     private String description;
+    @NotNull
+    private BigDecimal price;
 
-    private int price;
+    public Product() {
+
+    }
+    public Product(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
@@ -40,11 +51,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
