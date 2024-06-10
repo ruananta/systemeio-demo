@@ -10,9 +10,11 @@ public class CalculatePriceRequest {
     @NotNull(message = "Product ID must not be null")
     @ExistingProductId
     private Long product;
+
     @NotBlank(message = "Tax number must not be null")
     @ValidTaxNumber
     private String taxNumber;
+
     @NotNull(message = "Coupon code must not be null")
     private String couponCode;
 
