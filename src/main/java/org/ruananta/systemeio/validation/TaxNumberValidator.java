@@ -2,6 +2,7 @@ package org.ruananta.systemeio.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.ruananta.systemeio.payment.TaxNumberCountry;
 
 public class TaxNumberValidator implements ConstraintValidator<ValidTaxNumber, String> {
     @Override
@@ -11,11 +12,13 @@ public class TaxNumberValidator implements ConstraintValidator<ValidTaxNumber, S
 
     @Override
     public boolean isValid(String taxNumber, ConstraintValidatorContext constraintValidatorContext) {
-        if(taxNumber == null || taxNumber.isEmpty())
+        if(taxNumber == null)
             return false;
-        return taxNumber.matches("DE\\d{9}") || // DEXXXXXXXXX - Germany
-                taxNumber.matches("IT\\d{11}") || // ITXXXXXXXXXXX - Italy
-                taxNumber.matches("GR\\d{9}") ||  // GRXXXXXXXXX - Greece
-                taxNumber.matches("FR[A-Z]{2}\\d{9}"); // FRYYXXXXXXXXX - France
+        try {
+            TaxNumberCountry.getCountryFromTaxNumber(taxNumber);
+            return true;
+        }catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }
