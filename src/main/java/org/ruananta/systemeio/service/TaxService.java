@@ -2,6 +2,7 @@ package org.ruananta.systemeio.service;
 
 import org.ruananta.systemeio.config.TaxConfiguration;
 import org.ruananta.systemeio.entity.Coupon;
+import org.ruananta.systemeio.entity.DiscountType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,8 @@ import java.math.RoundingMode;
 public class TaxService {
     private CouponService couponService;
     private TaxConfiguration taxConfiguration;
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
+    private static final int SCALE = 2;
 
     @Autowired
     public void setCouponService(CouponService couponService) {
@@ -24,13 +27,17 @@ public class TaxService {
 
     public BigDecimal calculateTax(BigDecimal price, String country) {
         return this.taxConfiguration.getTaxRateFromCountry(country)
-                .map(taxRate -> price.multiply(taxRate).setScale(2, RoundingMode.HALF_UP))
+                .map(taxRate -> price.multiply(taxRate).setScale(SCALE, RoundingMode.HALF_UP))
                 .orElseThrow(() -> new IllegalArgumentException("Country not supported"));
     }
 
-    public BigDecimal applyCoupon(BigDecimal price, Coupon coupon) {
-        BigDecimal discount = price.multiply(coupon.getDiscount()).divide(BigDecimal.valueOf(100));
-        return price.subtract(discount).setScale(2, RoundingMode.HALF_UP);
+    public BigDecimal applyCoupon(BigDecimal totalAmount, Coupon coupon) {
+        BigDecimal discountAmount = switch (coupon.getDiscountType()) {
+            case FIXED -> coupon.getDiscount();
+            case PERCENTAGE -> totalAmount.multiply(coupon.getDiscount()).divide(ONE_HUNDRED);
+            default -> throw new IllegalArgumentException("Unknown discount type: " + coupon.getDiscountType());
+        };
+        return totalAmount.subtract(discountAmount).setScale(SCALE, RoundingMode.HALF_UP);
     }
 
     public BigDecimal calculateFinalPrice(BigDecimal basePrice, String taxNumber, String couponCode) {
