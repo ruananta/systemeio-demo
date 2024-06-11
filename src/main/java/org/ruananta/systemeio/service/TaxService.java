@@ -41,7 +41,7 @@ public class TaxService {
     public BigDecimal applyCoupon(BigDecimal totalAmount, Coupon coupon) {
         BigDecimal discountAmount = switch (coupon.getDiscountType()) {
             case FIXED -> coupon.getDiscount();
-            case PERCENTAGE -> totalAmount.multiply(coupon.getDiscount()).divide(ONE_HUNDRED);
+            case PERCENTAGE -> totalAmount.multiply(coupon.getDiscount()).divide(ONE_HUNDRED, RoundingMode.HALF_UP);
             default -> throw new IllegalArgumentException("Unknown discount type: " + coupon.getDiscountType());
         };
         return totalAmount.subtract(discountAmount).setScale(SCALE, RoundingMode.HALF_UP);

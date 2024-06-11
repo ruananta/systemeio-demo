@@ -3,11 +3,7 @@ package org.ruananta.systemeio.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.ruananta.systemeio.config.PaymentConfiguration;
-import org.ruananta.systemeio.payment.PaymentAdaptor;
-import org.ruananta.systemeio.payment.PaypalAdaptor;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Map;
 
 public class ExistingPaymentProcessorValidator implements ConstraintValidator<ExistingPaymentProcessor, String> {
 
