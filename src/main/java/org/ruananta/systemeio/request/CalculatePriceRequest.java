@@ -3,19 +3,20 @@ package org.ruananta.systemeio.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.ruananta.systemeio.payment.TaxNumberCountry;
+import org.ruananta.systemeio.validation.ExistingOrEmptyCouponCode;
 import org.ruananta.systemeio.validation.ExistingProductId;
 import org.ruananta.systemeio.validation.ValidTaxNumber;
 
 public class CalculatePriceRequest {
     @NotNull(message = "Product ID must not be null")
-    @ExistingProductId
+    @ExistingProductId 
     private Long product;
 
     @NotBlank(message = "Tax number must not be null")
     @ValidTaxNumber
     private String taxNumber;
 
-    @NotNull(message = "Coupon code must not be null")
+    @ExistingOrEmptyCouponCode
     private String couponCode;
 
     public Long getProduct() {
