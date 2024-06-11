@@ -10,6 +10,7 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(length = 30)
     private String code;
     private DiscountType discountType;
     private BigDecimal discount;

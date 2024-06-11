@@ -2,14 +2,13 @@ package org.ruananta.systemeio.service;
 
 import org.ruananta.systemeio.config.TaxConfiguration;
 import org.ruananta.systemeio.entity.Coupon;
-import org.ruananta.systemeio.entity.DiscountType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@Component
+@Service
 public class TaxService {
     private CouponService couponService;
     private TaxConfiguration taxConfiguration;

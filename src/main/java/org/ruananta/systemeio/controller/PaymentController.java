@@ -36,6 +36,7 @@ public class PaymentController {
     @PostMapping("/calculate-price")
     public ResponseEntity<String> calculatePrice(@Valid @RequestBody CalculatePriceRequest request) {
         Optional<Product> optionalProduct = this.productService.findById(request.getProduct());
+        //Можно проверить не пустой ли optionalProduct, но я его проверяю в CalculatePriceRequest
         BigDecimal finalPrice = this.taxService.calculateFinalPrice(
                 optionalProduct.get().getPrice(),
                 request.getTaxNumber(),

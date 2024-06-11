@@ -4,14 +4,14 @@ import jakarta.annotation.PostConstruct;
 import org.ruananta.systemeio.entity.Product;
 import org.ruananta.systemeio.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
