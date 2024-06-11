@@ -2,7 +2,6 @@ package org.ruananta.systemeio.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.ruananta.systemeio.payment.TaxNumberCountry;
 import org.ruananta.systemeio.validation.ExistingOrEmptyCouponCode;
 import org.ruananta.systemeio.validation.ExistingProductId;
 import org.ruananta.systemeio.validation.ValidTaxNumber;
@@ -43,7 +42,4 @@ public class CalculatePriceRequest {
         this.couponCode = couponCode;
     }
 
-    public TaxNumberCountry getTaxNumberCountry() {
-        return TaxNumberCountry.getCountryFromTaxNumber(taxNumber);
-    }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:map id="taxNumberCountryRegex" map-class="java.util.HashMap">
+        <entry key="GERMANY" value="DE\d{9}" /> <!-- DEXXXXXXXXX -->
+        <entry key="ITALY" value="IT\d{11}" /> <!-- ITXXXXXXXXXXX -->
+        <entry key="GREECE" value="GR\d{9}" /> <!-- GRXXXXXXXXX -->
+        <entry key="FRANCE" value="FR[A-Z]{2}\d{9}" /> <!-- FRYYXXXXXXXXX -->
+    </util:map>
+    <util:map id="taxRates" map-class="java.util.HashMap">
+        <entry key="GERMANY" value-type="java.math.BigDecimal" value="0.19"/>
+        <entry key="ITALY" value-type="java.math.BigDecimal" value="0.22"/>
+        <entry key="GREECE" value-type="java.math.BigDecimal" value="0.24"/>
+        <entry key="FRANCE" value-type="java.math.BigDecimal" value="0.20"/>
+    </util:map>
+</beans>

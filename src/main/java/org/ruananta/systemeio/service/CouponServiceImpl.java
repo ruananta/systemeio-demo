@@ -18,6 +18,7 @@ public class CouponServiceImpl implements CouponService {
     public void initDB() {
         if(this.couponRepository.count() == 0) {
             List<Coupon> coupons = Arrays.asList(
+                    new Coupon("P6", new BigDecimal("6.00")),
                     new Coupon("P10", new BigDecimal("10.00")),
                     new Coupon("P100", new BigDecimal("100.00"))
             );
