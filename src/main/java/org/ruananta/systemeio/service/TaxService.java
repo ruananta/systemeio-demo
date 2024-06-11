@@ -2,16 +2,20 @@ package org.ruananta.systemeio.service;
 
 import org.ruananta.systemeio.config.TaxConfiguration;
 import org.ruananta.systemeio.entity.Coupon;
+import org.ruananta.systemeio.entity.Product;
+import org.ruananta.systemeio.request.CalculatePriceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 @Service
 public class TaxService {
     private CouponService couponService;
     private TaxConfiguration taxConfiguration;
+    private ProductService productService;
     private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
     private static final int SCALE = 2;
 
@@ -22,6 +26,10 @@ public class TaxService {
     @Autowired
     public void setTaxConfiguration(TaxConfiguration taxConfiguration) {
         this.taxConfiguration = taxConfiguration;
+    }
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
     public BigDecimal calculateTax(BigDecimal price, String country) {
@@ -57,4 +65,13 @@ public class TaxService {
         return couponCode != null && !couponCode.isEmpty();
     }
 
+    public BigDecimal calculateFinalPrice(CalculatePriceRequest request) {
+        Optional<Product> optionalProduct = this.productService.findById(request.getProduct());
+        //Можно проверить не пустой ли optionalProduct, но я его проверяю в CalculatePriceRequest на получении
+        return calculateFinalPrice(
+                optionalProduct.get().getPrice(),
+                request.getTaxNumber(),
+                request.getCouponCode()
+        );
+    }
 }

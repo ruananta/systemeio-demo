@@ -1,19 +1,42 @@
 package org.ruananta.systemeio.config;
 
-import jakarta.annotation.Resource;
-import org.ruananta.systemeio.payment.PaymentProcessor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import jakarta.annotation.PostConstruct;
+import org.ruananta.systemeio.payment.*;
 
+import org.springframework.context.annotation.Configuration;
+
+
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Configuration
-@ImportResource("classpath:payment-config.xml")
 public class PaymentConfiguration {
-    @Resource
-    private Map<String, Class<? extends PaymentProcessor<?>>> paymentProcessors;
 
-    public boolean existsPaymentProcessorByName(String name) {
-        return this.paymentProcessors.containsKey(name);
+    private Map<String, PaymentAdaptor> paymentAdaptors;
+    public PaypalPaymentProcessor paypalPaymentProcessor() {
+        return new PaypalPaymentProcessor();
     }
+    public StripePaymentProcessor stripePaymentProcessor() {
+        return new StripePaymentProcessor();
+    }
+    public PaypalAdaptor paypalAdaptor() {
+        return new PaypalAdaptor(paypalPaymentProcessor());
+    }
+
+    public StripeAdaptor stripeAdaptor() {
+        return new StripeAdaptor(stripePaymentProcessor());
+    }
+
+    @PostConstruct
+    public void init() {
+        this.paymentAdaptors = new HashMap<>();
+        this.paymentAdaptors.put("paypal", paypalAdaptor());
+        this.paymentAdaptors.put("stripe", stripeAdaptor());
+    }
+
+    public Optional<PaymentAdaptor> getPaymentAdaptorByName(String name) {
+        return Optional.ofNullable(paymentAdaptors.get(name));
+    }
+
 }

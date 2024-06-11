@@ -11,8 +11,15 @@
     <bean id="paypalPaymentProcessor" class="org.ruananta.systemeio.payment.PaypalPaymentProcessor"/>
     <bean id="stripePaymentProcessor" class="org.ruananta.systemeio.payment.StripePaymentProcessor"/>
 
-    <util:map id="paymentProcessors" map-class="java.util.HashMap">
-        <entry key="paypal" value-ref="paypalPaymentProcessor"/>
-        <entry key="stripe" value-ref="stripePaymentProcessor"/>
+    <bean id="paypalAdaptor" class="org.ruananta.systemeio.payment.PaypalAdaptor">
+        <property name="processor" ref="paypalPaymentProcessor"/>
+    </bean>
+    <bean id="stripeAdaptor" class="org.ruananta.systemeio.payment.StripeAdaptor">
+        <property name="processor" ref="stripePaymentProcessor"/>
+    </bean>
+
+    <util:map id="paymentAdaptors" map-class="java.util.HashMap">
+        <entry key="paypal" value-ref="paypalAdaptor"/>
+        <entry key="stripe" value-ref="stripeAdaptor"/>
     </util:map>
 </beans>

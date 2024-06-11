@@ -1,9 +1,10 @@
 package org.ruananta.systemeio.controller;
 
 import jakarta.validation.Valid;
-import org.ruananta.systemeio.entity.Product;
+import org.ruananta.systemeio.payment.PaymentProcessingException;
 import org.ruananta.systemeio.request.CalculatePriceRequest;
-import org.ruananta.systemeio.service.ProductService;
+import org.ruananta.systemeio.request.PaymentRequest;
+import org.ruananta.systemeio.service.PaymentService;
 import org.ruananta.systemeio.service.TaxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,46 +13,41 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class PaymentController {
 
     private TaxService taxService;
-    private ProductService productService;
+    private PaymentService paymentService;
 
     @Autowired
     public void setTaxService(TaxService taxService) {
         this.taxService = taxService;
     }
-
     @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @PostMapping("/calculate-price")
     public ResponseEntity<String> calculatePrice(@Valid @RequestBody CalculatePriceRequest request) {
-        Optional<Product> optionalProduct = this.productService.findById(request.getProduct());
-        //Можно проверить не пустой ли optionalProduct, но я его проверяю в CalculatePriceRequest
-        BigDecimal finalPrice = this.taxService.calculateFinalPrice(
-                optionalProduct.get().getPrice(),
-                request.getTaxNumber(),
-                request.getCouponCode()
-        );
-        return ResponseEntity.ok(finalPrice.toString());
+        return ResponseEntity.ok(taxService.calculateFinalPrice(request).toString());
     }
 
     @PostMapping("/purchase")
-    public String purchase(@RequestBody Product product) {
-        return "";
+    public ResponseEntity<String> purchase(@Valid @RequestBody PaymentRequest request) {
+        try{
+            this.paymentService.makePayment(request);
+        }catch (PaymentProcessingException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.ok("The payment was successful");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -62,5 +58,4 @@ public class PaymentController {
         });
         return errors;
     }
-
 }

@@ -1,13 +1,11 @@
 package org.ruananta.systemeio.payment;
 
-public class PaypalPaymentProcessor implements PaymentProcessor<Integer> {
+public class PaypalPaymentProcessor {
 
-    @Override
-    public boolean makePayment(Integer price) throws IllegalArgumentException {
-        Integer amount = price.intValue();
-        if (amount > 100000) {
+
+    public void makePayment(Integer price) throws IllegalArgumentException {
+        if (price > 100000) {
             throw new IllegalArgumentException("The amount exceeds the limit for Paypal");
         }
-        return true;
     }
 }

@@ -1,6 +1,5 @@
 package org.ruananta.systemeio.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.ruananta.systemeio.validation.ExistingOrEmptyCouponCode;
 import org.ruananta.systemeio.validation.ExistingProductId;
@@ -10,8 +9,7 @@ public class CalculatePriceRequest {
     @NotNull(message = "Product ID must not be null")
     @ExistingProductId 
     private Long product;
-
-    @NotBlank(message = "Tax number must not be null")
+    @NotNull(message = "Tax number must not be null")
     @ValidTaxNumber
     private String taxNumber;
 
