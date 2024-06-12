@@ -27,17 +27,17 @@ public class TaxConfiguration {
         throw new IllegalArgumentException("Invalid tax number: " + taxNumber);
     }
 
-    public Optional<BigDecimal> getRateFromTaxNumber(String taxNumber) {
+    public BigDecimal getRateFromTaxNumber(String taxNumber) {
         String taxNumberCountry = getCountryFromTaxNumber(taxNumber);
         return getTaxRateFromCountry(taxNumberCountry);
     }
 
-    public Optional<BigDecimal> getTaxRateFromCountry(String country) {
+    public BigDecimal getTaxRateFromCountry(String country) {
         for (Map.Entry<String, BigDecimal> entry : this.taxRates.entrySet()) {
             if(country.equals(entry.getKey())) {
-                return Optional.ofNullable(taxRates.get(entry.getKey()));
+                return taxRates.get(entry.getKey());
             }
         }
-        return Optional.empty();
+        throw new IllegalArgumentException("Invalid country: " + country);
     }
 }

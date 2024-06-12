@@ -1,7 +1,7 @@
 package org.ruananta.systemeio.controller;
 
 import jakarta.validation.Valid;
-import org.ruananta.systemeio.payment.PaymentProcessingException;
+import org.ruananta.systemeio.exeption.PaymentProcessingException;
 import org.ruananta.systemeio.request.CalculatePriceRequest;
 import org.ruananta.systemeio.request.PaymentRequest;
 import org.ruananta.systemeio.service.PaymentService;

@@ -1,5 +1,7 @@
 package org.ruananta.systemeio.payment;
 
+import org.ruananta.systemeio.exeption.PaymentProcessingException;
+
 import java.math.BigDecimal;
 
 
@@ -22,7 +24,7 @@ public class PaypalAdaptor implements PaymentAdaptor {
     public void makePayment(BigDecimal amount) throws PaymentProcessingException {
         try {
             this.processor.makePayment(amount.intValue());
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new PaymentProcessingException(e.getMessage());
         }
     }

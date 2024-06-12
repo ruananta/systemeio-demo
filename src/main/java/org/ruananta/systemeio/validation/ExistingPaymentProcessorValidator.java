@@ -20,6 +20,6 @@ public class ExistingPaymentProcessorValidator implements ConstraintValidator<Ex
         if (name == null) {
             return false;
         }
-        return this.paymentConfiguration.getPaymentAdaptorByName(name).isPresent();
+        return this.paymentConfiguration.existAdaptor(name);
     }
 }

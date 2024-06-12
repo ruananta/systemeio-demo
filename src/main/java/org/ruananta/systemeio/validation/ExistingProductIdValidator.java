@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ExistingProductIdValidator implements ConstraintValidator<ExistingProductId, Long> {
 
-    @Autowired
     private ProductService productService;
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public boolean isValid(Long productId, ConstraintValidatorContext context) {

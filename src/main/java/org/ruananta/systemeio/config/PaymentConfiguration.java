@@ -1,6 +1,7 @@
 package org.ruananta.systemeio.config;
 
 import jakarta.annotation.PostConstruct;
+import org.ruananta.systemeio.exeption.ObjectNotFoundExcepetion;
 import org.ruananta.systemeio.payment.*;
 
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +35,12 @@ public class PaymentConfiguration {
         this.paymentAdaptors.put("paypal", paypalAdaptor());
         this.paymentAdaptors.put("stripe", stripeAdaptor());
     }
-
-    public Optional<PaymentAdaptor> getPaymentAdaptorByName(String name) {
-        return Optional.ofNullable(paymentAdaptors.get(name));
+    public boolean existAdaptor(String name) {
+        return paymentAdaptors.containsKey(name);
+    }
+    public PaymentAdaptor getAdaptor(String name) {
+        Optional<PaymentAdaptor> result = Optional.ofNullable(paymentAdaptors.get(name));
+        return result.orElseThrow(() -> new ObjectNotFoundExcepetion("Object not found"));
     }
 
 }

@@ -9,6 +9,11 @@ public class PaymentRequest extends CalculatePriceRequest {
     @ExistingPaymentProcessor
     private String paymentProcessor;
 
+    public PaymentRequest(Long productId, String taxNumber, String couponCode, String paymentProcessor) {
+        super(productId, taxNumber, couponCode);
+        this.paymentProcessor = paymentProcessor;
+    }
+
     public String getPaymentProcessor() {
         return paymentProcessor;
     }

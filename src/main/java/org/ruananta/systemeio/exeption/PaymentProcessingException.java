@@ -1,4 +1,4 @@
-package org.ruananta.systemeio.payment;
+package org.ruananta.systemeio.exeption;
 
 public class PaymentProcessingException  extends RuntimeException {
 

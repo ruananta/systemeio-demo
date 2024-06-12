@@ -15,6 +15,13 @@ public class CalculatePriceRequest {
 
     @ExistingOrEmptyCouponCode
     private String couponCode;
+    public CalculatePriceRequest() {}
+
+    public CalculatePriceRequest(Long productId, String taxNumber, String couponCode) {
+        this.product = productId;
+        this.taxNumber = taxNumber;
+        this.couponCode = couponCode;
+    }
 
     public Long getProduct() {
         return product;
