@@ -7,7 +7,7 @@ import org.ruananta.systemeio.validation.ValidTaxNumber;
 
 public class CalculatePriceRequest {
     @NotNull(message = "Product ID must not be null")
-    @ExistingProductId 
+    @ExistingProductId
     private Long product;
     @NotNull(message = "Tax number must not be null")
     @ValidTaxNumber
@@ -15,7 +15,9 @@ public class CalculatePriceRequest {
 
     @ExistingOrEmptyCouponCode
     private String couponCode;
-    public CalculatePriceRequest() {}
+
+    public CalculatePriceRequest() {
+    }
 
     public CalculatePriceRequest(Long productId, String taxNumber, String couponCode) {
         this.product = productId;

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ruananta.systemeio.config.PaymentConfiguration;
-import org.ruananta.systemeio.config.TaxConfiguration;
 import org.ruananta.systemeio.exeption.PaymentProcessingException;
 import org.ruananta.systemeio.payment.PaypalAdaptor;
 import org.ruananta.systemeio.request.CalculatePriceRequest;
@@ -49,8 +48,6 @@ public class PaymentControllerTests {
     @MockBean
     private ProductService productService;
     @MockBean
-    private TaxConfiguration taxConfiguration;
-    @MockBean
     private CouponService couponService;
     @MockBean
     private PaymentConfiguration paymentConfiguration;
@@ -65,9 +62,9 @@ public class PaymentControllerTests {
     public void configure() {
         when(taxService.calculateFinalPrice(any(CalculatePriceRequest.class))).thenReturn(FINAL_PRICE);
         when(productService.existsById(PRODUCT_ID)).thenReturn(true);
-        when(taxConfiguration.getCountryFromTaxNumber(TAX_NUMBER)).thenReturn(COUNTRY);
-        when(taxConfiguration.getRateFromTaxNumber(TAX_NUMBER)).thenReturn(TAX_RATE);
-        when(taxConfiguration.getTaxRateFromCountry(COUNTRY)).thenReturn(TAX_RATE);
+        when(taxService.getCountryFromTaxNumber(TAX_NUMBER)).thenReturn(COUNTRY);
+        when(taxService.getTaxRateFromTaxNumber(TAX_NUMBER)).thenReturn(TAX_RATE);
+        when(taxService.getTaxRateFromCountry(COUNTRY)).thenReturn(TAX_RATE);
         when(couponService.existsByCode(COUPON)).thenReturn(true);
         when(paymentConfiguration.getAdaptor(PAYMENT_PROCESSOR)).thenReturn(paypalAdaptor);
         when(paymentConfiguration.existAdaptor(PAYMENT_PROCESSOR)).thenReturn(true);

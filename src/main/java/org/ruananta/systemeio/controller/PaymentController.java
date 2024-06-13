@@ -26,6 +26,7 @@ public class PaymentController {
     public void setTaxService(TaxService taxService) {
         this.taxService = taxService;
     }
+
     @Autowired
     public void setPaymentService(PaymentService paymentService) {
         this.paymentService = paymentService;
@@ -38,9 +39,9 @@ public class PaymentController {
 
     @PostMapping("/purchase")
     public ResponseEntity<String> purchase(@Valid @RequestBody PaymentRequest request) {
-        try{
+        try {
             this.paymentService.makePayment(request);
-        }catch (PaymentProcessingException e){
+        } catch (PaymentProcessingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
         return ResponseEntity.ok("The payment was successful");

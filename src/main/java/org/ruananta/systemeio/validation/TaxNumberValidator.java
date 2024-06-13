@@ -2,15 +2,15 @@ package org.ruananta.systemeio.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.ruananta.systemeio.config.TaxConfiguration;
+import org.ruananta.systemeio.service.TaxService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TaxNumberValidator implements ConstraintValidator<ValidTaxNumber, String> {
-    private TaxConfiguration taxConfiguration;
+    private TaxService taxService;
 
     @Autowired
-    public void setTaxConfiguration(TaxConfiguration taxConfiguration) {
-        this.taxConfiguration = taxConfiguration;
+    public void setTaxService(TaxService taxService) {
+        this.taxService = taxService;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class TaxNumberValidator implements ConstraintValidator<ValidTaxNumber, S
         if(taxNumber == null)
             return false;
         try {
-            this.taxConfiguration.getCountryFromTaxNumber(taxNumber);
+            this.taxService.getCountryFromTaxNumber(taxNumber);
             return true;
         }catch (IllegalArgumentException e) {
             return false;

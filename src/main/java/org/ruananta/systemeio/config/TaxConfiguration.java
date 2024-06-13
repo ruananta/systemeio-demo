@@ -26,7 +26,7 @@ public class TaxConfiguration {
         throw new IllegalArgumentException("Invalid tax number: " + taxNumber);
     }
 
-    public BigDecimal getRateFromTaxNumber(String taxNumber) {
+    public BigDecimal getTaxRateFromTaxNumber(String taxNumber) {
         String taxNumberCountry = getCountryFromTaxNumber(taxNumber);
         return getTaxRateFromCountry(taxNumberCountry);
     }

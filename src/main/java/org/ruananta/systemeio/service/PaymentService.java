@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class PaymentService {
     private TaxService taxService;
     private PaymentConfiguration paymentConfiguration;
-    
+
     @Autowired
     public void setPaymentConfiguration(PaymentConfiguration paymentConfiguration) {
         this.paymentConfiguration = paymentConfiguration;

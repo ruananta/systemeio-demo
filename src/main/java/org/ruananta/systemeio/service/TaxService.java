@@ -31,10 +31,12 @@ public class TaxService {
     public void setCouponService(CouponService couponService) {
         this.couponService = couponService;
     }
+
     @Autowired
     public void setTaxConfiguration(TaxConfiguration taxConfiguration) {
         this.taxConfiguration = taxConfiguration;
     }
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -58,8 +60,9 @@ public class TaxService {
         return calculatePriceWithTax(priceAfterDiscount, taxNumber);
     }
 
+    
     private BigDecimal calculateTax(BigDecimal price, String country) {
-        return price.multiply(this.taxConfiguration.getTaxRateFromCountry(country)
+        return price.multiply(getTaxRateFromCountry(country)
                 .setScale(SCALE, RoundingMode.HALF_UP));
     }
 
@@ -72,14 +75,25 @@ public class TaxService {
         return totalAmount.subtract(discountAmount).setScale(SCALE, RoundingMode.HALF_UP);
     }
 
-
     private BigDecimal calculatePriceWithTax(BigDecimal basePrice, String taxNumber) {
-        String country = this.taxConfiguration.getCountryFromTaxNumber(taxNumber);
+        String country = getCountryFromTaxNumber(taxNumber);
         return basePrice.add(calculateTax(basePrice, country)).setScale(SCALE, RoundingMode.HALF_UP);
     }
 
     private boolean isCouponCodeValid(String couponCode) {
         return couponCode != null && !couponCode.isEmpty();
+    }
+
+    public BigDecimal getTaxRateFromTaxNumber(String taxNumber) {
+        return this.taxConfiguration.getTaxRateFromTaxNumber(taxNumber);
+    }
+
+    public BigDecimal getTaxRateFromCountry(String country) {
+        return this.taxConfiguration.getTaxRateFromCountry(country);
+    }
+
+    public String getCountryFromTaxNumber(String taxNumber) {
+        return this.taxConfiguration.getCountryFromTaxNumber(taxNumber);
     }
 
 
