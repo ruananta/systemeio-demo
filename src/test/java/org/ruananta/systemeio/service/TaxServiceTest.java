@@ -32,7 +32,7 @@ public class TaxServiceTest {
     public void calculateFinalPrice_WithValidCoupon_ShouldApplyDiscount() {
         Long productId = 753L;
         String taxNumber = "GR123456789";
-        String couponCode = "F20";
+        String couponCode = "P6";
         BigDecimal basePrice = new BigDecimal("100.00");
         BigDecimal discount = new BigDecimal("6.00");
         String country = "GREECE";
@@ -57,7 +57,7 @@ public class TaxServiceTest {
     public void calculateFinalPrice_WithValidCoupon_ShouldApplyFixedDiscount() {
         Long productId = 753L;
         String taxNumber = "GR123456789";
-        String couponCode = "F20";
+        String couponCode = "F10";
         BigDecimal basePrice = new BigDecimal("110.00");
         BigDecimal discount = new BigDecimal("10.00");
         String country = "GREECE";
