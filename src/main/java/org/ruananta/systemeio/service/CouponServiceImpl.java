@@ -18,15 +18,15 @@ public class CouponServiceImpl implements CouponService {
 
     @PostConstruct
     public void initDB() {
-        if (this.couponRepository.count() == 0) {
-            List<Coupon> coupons = Arrays.asList(
-                    new Coupon("P6", DiscountType.PERCENTAGE, new BigDecimal("6.00")),
-                    new Coupon("P10", DiscountType.PERCENTAGE, new BigDecimal("10.00")),
-                    new Coupon("P100", DiscountType.PERCENTAGE, new BigDecimal("100.00")),
-                    new Coupon("F10", DiscountType.FIXED, new BigDecimal("10.00"))
-            );
-            this.couponRepository.saveAll(coupons);
-        }
+//        if (this.couponRepository.count() == 0) {
+//            List<Coupon> coupons = Arrays.asList(
+//                    new Coupon("P6", DiscountType.PERCENTAGE, new BigDecimal("6.00")),
+//                    new Coupon("P10", DiscountType.PERCENTAGE, new BigDecimal("10.00")),
+//                    new Coupon("P100", DiscountType.PERCENTAGE, new BigDecimal("100.00")),
+//                    new Coupon("F10", DiscountType.FIXED, new BigDecimal("10.00"))
+//            );
+//            this.couponRepository.saveAll(coupons);
+//        }
     }
 
     @Autowired

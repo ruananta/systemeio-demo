@@ -23,14 +23,14 @@ public class ProductServiceImpl implements ProductService {
 
     @PostConstruct
     public void initDB() {
-        if (productRepository.count() == 0) {
-            List<Product> products = Arrays.asList(
-                    new Product("Iphone", "Описание Iphone", new BigDecimal("100.00")),
-                    new Product("Наушники", "Описание наушников", new BigDecimal("20.0")),
-                    new Product("Чехол", "Описание чехла", new BigDecimal("10.0"))
-            );
-            productRepository.saveAll(products);
-        }
+//        if (productRepository.count() == 0) {
+//            List<Product> products = Arrays.asList(
+//                    new Product("Iphone", "Описание Iphone", new BigDecimal("100.00")),
+//                    new Product("Наушники", "Описание наушников", new BigDecimal("20.0")),
+//                    new Product("Чехол", "Описание чехла", new BigDecimal("10.0"))
+//            );
+//            productRepository.saveAll(products);
+//        }
     }
 
     @Override
