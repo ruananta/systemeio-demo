@@ -8,10 +8,11 @@ import java.math.BigDecimal;
 @Table(name = "coupon")
 public class Coupon {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 30)
     private String code;
+    @Column(name = "discount_type")
     private DiscountType discountType;
     private BigDecimal discount;
 
